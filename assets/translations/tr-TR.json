@@ -1,0 +1,18 @@
+{
+  "onboarding":
+  {
+    "slide1title":"Hoş Geldiniz!",
+    "slide1desc":"QR ile iletişimi kolaylaştırmaya hazır mısınız? Birkaç basit adımla başlayalım!",
+    "slide2title":"QR Kodunuzu Oluşturun",
+    "slide2desc":"Kendi bilgilerinizi, restoran menünüzü veya evcil hayvanınızın bilgilerini paylaşmak için bir QR kod oluşturun.",
+    "slide3title":"Kodunuzu Paylaşın",
+    "slide3desc":"Oluşturduğunuz QR kodunu telefon numaranız, email, mesaj veya diğer bilgilerle kolayca paylaşın. Araç etiketleri, evcil hayvan tasmaları veya restoran menüleri için mükemmel!"
+  },
+  "authentication":
+  {
+    "createaccount":"Hesabınızı Oluşturun",
+    "createaccountdesc":"Hesabınızı oluşturun ve QR kodlarınızı yönetmeye başlayın.",
+    "maillogin":"Kayıt için Mail Kullan.",
+    "ihaveaccount":"Hesabınız mı var? Giriş Yapın"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "onboarding": 
+  {
+    "onboarding": "Onboarding",
+    "slide1title": "Welcome!",
+    "slide1desc": "Ready to simplify communication with QR? Let's start with a few simple steps!",
+    "slide2title": "Create Your QR Code",
+    "slide2desc": "Create a QR code to share your personal information, restaurant menu, or pet information.",
+    "slide3title": "Share Your Code",
+    "slide3desc": "Easily share the QR code you created with your phone number, email, message, or other information. Perfect for vehicle tags, pet collars, or restaurant menus!"
+  },  
+  "authentication": 
+  {
+      "createaccount": "Create Your Account",
+      "createaccountdesc": "Create your account and start managing your QR codes.",
+      "maillogin": "Use Email to Sign Up",
+      "ihaveaccount": "Already have an account? Log In"
+  }
+}
