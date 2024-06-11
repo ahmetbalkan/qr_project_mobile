@@ -15,7 +15,6 @@ dependencies:
   get_it: ^7.7.0
   injectable: ^2.1.2
   json_annotation: ^4.7.0
-  flutter_bloc: ^8.1.5
   dio: ^5.4.3+1
   retrofit: ^4.1.0
   easy_localization: ^3.0.7
@@ -27,6 +26,10 @@ dependencies:
   reactive_forms: ^17.0.1
   reactive_phone_form_field: ^3.0.0
   reactive_date_time_picker: ^3.0.1
+  font_awesome_flutter: ^10.7.0
+  flutter_riverpod: ^2.5.1
+  flutter_screenutil: ^5.9.3
+  auto_size_text: ^3.0.0
 
 
 
@@ -44,9 +47,60 @@ flutter:
   assets:
     - assets/
     - assets/images/
+    - assets/translations/
     - assets/fonts/
+    
   fonts:
     - family: Gellini
       fonts:
         - asset: assets/fonts/Gelline.otf
+    - family: Graphik
+      fonts:
+        - asset: assets/fonts/GraphikThin.otf
+          weight: 100
+        - asset: assets/fonts/GraphikThinItalic.otf
+          weight: 100
+          style: italic
+        - asset: assets/fonts/GraphikLight.otf
+          weight: 300
+        - asset: assets/fonts/GraphikLightItalic.otf
+          weight: 300
+          style: italic
+        - asset: assets/fonts/GraphikRegular.otf
+          weight: 400
+        - asset: assets/fonts/GraphikRegularItalic.otf
+          weight: 400
+          style: italic
+        - asset: assets/fonts/GraphikMedium.otf
+          weight: 500
+        - asset: assets/fonts/GraphikMediumItalic.otf
+          weight: 500
+          style: italic
+        - asset: assets/fonts/GraphikSemibold.otf
+          weight: 600
+        - asset: assets/fonts/GraphikSemiboldItalic.otf
+          weight: 600
+          style: italic
+        - asset: assets/fonts/GraphikBold.otf
+          weight: 700
+        - asset: assets/fonts/GraphikBoldItalic.otf
+          weight: 700
+          style: italic
+        - asset: assets/fonts/GraphikSuper.otf
+          weight: 800
+        - asset: assets/fonts/GraphikSuperItalic.otf
+          weight: 800
+          style: italic
+        - asset: assets/fonts/GraphikBlack.otf
+          weight: 900
+        - asset: assets/fonts/GraphikBlackItalic.otf
+          weight: 900
+          style: italic
+        - asset: assets/fonts/GraphikExtralight.otf
+          weight: 200
+        - asset: assets/fonts/GraphikExtralightItalic.otf
+          weight: 200
+          style: italic
+
+        
 
