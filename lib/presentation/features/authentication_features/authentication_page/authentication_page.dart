@@ -7,14 +7,19 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:qontact/core/constants/enums/locale_enums.dart';
+import 'package:qontact/core/constants/image_constants.dart';
 import 'package:qontact/core/constants/locale/locale_keys.g.dart';
 import 'package:qontact/core/utils/locale/locale_extention.dart';
+import 'package:qontact/presentation/features/authentication_features/register_page/register_page.dart';
+import 'package:qontact/presentation/features/onboarding_page/onboarding_page.dart';
+import 'package:qontact/presentation/global_widgets/buttons/custom_circle_icon_button.dart';
 import 'package:qontact/presentation/global_widgets/locale_text/locale_text.dart';
+import 'package:qontact/presentation/navigation/app_router.dart';
+import 'package:qontact/presentation/navigation/app_router.gr.dart';
 import 'package:qontact/presentation/theme/app_color.dart';
 import 'package:qontact/presentation/theme/app_spacing.dart';
 import 'package:qontact/presentation/theme/space/app_edgeinsets.dart';
 import 'package:qontact/presentation/theme/text_styles.dart';
-import 'package:qontact/presentation/theme/theme_notifier.dart';
 import 'package:qontact/presentation/global_widgets/buttons/custom_button.dart';
 import 'package:qontact/presentation/global_widgets/buttons/custom_icon_button.dart';
 import 'package:qontact/presentation/global_widgets/logo_widget.dart';
@@ -35,8 +40,7 @@ class AuthenticationPage extends ConsumerWidget {
                 Expanded(
                   flex: 2,
                   child: Padding(
-                    padding:
-                        const AppEdgeInset.all(value: AppSpacing.spacing20),
+                    padding: AppEdgeInset.all(value: AppSpacing.spacing20),
                     child: ClipPath(
                       clipper: AuthenticationClipPath(),
                       child: Container(
@@ -44,7 +48,8 @@ class AuthenticationPage extends ConsumerWidget {
                         decoration: const BoxDecoration(
                           image: DecorationImage(
                             image: AssetImage(
-                                'assets/images/splash_background1.jpg'),
+                              ImageConstants.authenticationImage,
+                            ),
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -68,13 +73,13 @@ class AuthenticationPage extends ConsumerWidget {
                               ],
                             ),
                           ),
-                          padding: const AppEdgeInset.all(
-                              value: AppSpacing.spacing20),
+                          padding:
+                              AppEdgeInset.all(value: AppSpacing.spacing20),
                           child: Align(
                             alignment: Alignment.bottomLeft,
                             child: Padding(
-                              padding: const AppEdgeInset.all(
-                                  value: AppSpacing.spacing4),
+                              padding:
+                                  AppEdgeInset.all(value: AppSpacing.spacing4),
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -111,16 +116,15 @@ class AuthenticationPage extends ConsumerWidget {
                 Expanded(
                   flex: 1,
                   child: Padding(
-                    padding:
-                        const AppEdgeInset.all(value: AppSpacing.spacing20),
+                    padding: AppEdgeInset.all(value: AppSpacing.spacing20),
                     child: Column(
                       children: [
                         CustomButton(
                           onTap: () {
-                            ref.read(themeProvider.notifier).toggleTheme();
+                            context.router.navigate(const RegisterRoute());
                           },
                           isFullWidth: true,
-                          height: 70.h,
+                          height: 60.h,
                           isIcon: true,
                           icon: FontAwesomeIcons.envelope,
                           isText: true,
@@ -131,7 +135,7 @@ class AuthenticationPage extends ConsumerWidget {
                           children: [
                             Expanded(
                               child: CustomIconButton(
-                                height: 70.h,
+                                height: 60.h,
                                 icon: const Icon(
                                   FontAwesomeIcons.google,
                                   color: Colors.white,
@@ -145,7 +149,7 @@ class AuthenticationPage extends ConsumerWidget {
                             SizedBox(width: 20.w),
                             Expanded(
                               child: CustomIconButton(
-                                height: 70.h,
+                                height: 60.h,
                                 icon: const Icon(
                                   FontAwesomeIcons.apple,
                                   color: Colors.white,
@@ -165,7 +169,7 @@ class AuthenticationPage extends ConsumerWidget {
                             height: 50.h,
                             child: GestureDetector(
                               onTap: () {
-                                context.router.canPop();
+                                context.router.navigate(const LoginRoute());
                               },
                               child: Center(
                                 child: LocaleText(
@@ -188,30 +192,26 @@ class AuthenticationPage extends ConsumerWidget {
               right: 0,
               child: Container(
                 alignment: Alignment.topCenter,
-                padding: const AppEdgeInset.all(value: AppSpacing.spacing12),
+                padding: AppEdgeInset.all(value: AppSpacing.spacing12),
                 child: LogoWidget(
                   fontsize: 60.sp,
+                  isWhite: false,
                 ),
               ),
             ),
             Positioned(
-              top: 50,
-              left: 55,
-              child: GestureDetector(
-                onTap: () {
-                  context.router.maybePop();
-                },
-                child: Container(
-                  padding: const AppEdgeInset.all(value: AppSpacing.spacing16),
-                  decoration: const BoxDecoration(
-                      shape: BoxShape.circle, color: AppColors.secondary),
-                  child: const Icon(
-                    Icons.arrow_back,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
+                top: 45,
+                left: 55,
+                child: CustomCircleIconButton(
+                  padding: 15.w,
+                  backgroundColor: AppColors.primary,
+                  icon: Icons.arrow_back,
+                  iconColor: Colors.white,
+                  iconSize: 20.w,
+                  onPressed: () {
+                    context.router.maybePop();
+                  },
+                )),
           ],
         ),
       ),

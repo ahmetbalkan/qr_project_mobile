@@ -7,6 +7,7 @@ class CustomIconButton extends StatelessWidget {
   final Color? background;
   final double? height;
   final VoidCallback onTap;
+  final bool isCircle;
 
   const CustomIconButton({
     super.key,
@@ -15,6 +16,7 @@ class CustomIconButton extends StatelessWidget {
     this.height,
     required this.onTap,
     this.background,
+    this.isCircle = false,
   });
 
   @override
@@ -25,8 +27,9 @@ class CustomIconButton extends StatelessWidget {
         height: height ?? 40,
         alignment: Alignment.center,
         decoration: BoxDecoration(
+          shape: isCircle ? BoxShape.circle : BoxShape.rectangle,
           color: background,
-          borderRadius: BorderRadius.circular(4),
+          borderRadius: isCircle ? null : BorderRadius.circular(4),
         ),
         child: Padding(
           padding: AppEdgeInset.horizontal(value: Glutter.px8),

@@ -5,15 +5,15 @@ class AppBorderRadius extends BorderRadius {
   AppBorderRadius.all(double value) : super.all(Radius.circular(value));
 
   AppBorderRadius.only({
-    double topLeft = AppSpacing.spacing0,
-    double topRight = AppSpacing.spacing0,
-    double bottomLeft = AppSpacing.spacing0,
-    double bottomRight = AppSpacing.spacing0,
+    double? topLeft,
+    double? topRight,
+    double? bottomLeft,
+    double? bottomRight,
   }) : super.only(
-          topLeft: Radius.circular(topLeft),
-          topRight: Radius.circular(topRight),
-          bottomLeft: Radius.circular(bottomLeft),
-          bottomRight: Radius.circular(bottomRight),
+          topLeft: Radius.circular(topLeft ?? AppSpacing.spacing0),
+          topRight: Radius.circular(topRight ?? AppSpacing.spacing0),
+          bottomLeft: Radius.circular(bottomLeft ?? AppSpacing.spacing0),
+          bottomRight: Radius.circular(bottomRight ?? AppSpacing.spacing0),
         );
 
   AppBorderRadius.top(double value)

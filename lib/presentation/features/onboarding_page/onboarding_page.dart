@@ -1,9 +1,10 @@
-import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:qontact/core/constants/image_constants.dart';
 import 'package:qontact/core/constants/locale/locale_keys.g.dart';
 import 'package:qontact/core/utils/locale/locale_extention.dart';
+import 'package:qontact/presentation/global_widgets/buttons/custom_circle_icon_button.dart';
 import 'package:qontact/presentation/global_widgets/locale_text/locale_text.dart';
 import 'package:qontact/presentation/navigation/app_router.gr.dart';
 import 'package:qontact/presentation/theme/app_color.dart';
@@ -11,24 +12,27 @@ import 'package:qontact/presentation/theme/app_spacing.dart';
 import 'package:qontact/presentation/theme/space/app_border_radius.dart';
 import 'package:qontact/presentation/theme/space/app_edgeinsets.dart';
 import 'package:qontact/presentation/theme/text_styles.dart';
-import 'package:qontact/presentation/features/authentication_page/presentation/authentication_page.dart';
 import 'package:qontact/presentation/global_widgets/logo_widget.dart';
 import 'package:qontact/presentation/theme/space/space_widget.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+final currentIndexProvider = StateProvider<int>((ref) => 0);
 
 @RoutePage()
-class OnboardingPage extends StatefulWidget {
+class OnboardingPage extends ConsumerStatefulWidget {
   const OnboardingPage({super.key});
 
   @override
   _OnboardingPageState createState() => _OnboardingPageState();
 }
 
-class _OnboardingPageState extends State<OnboardingPage> {
+class _OnboardingPageState extends ConsumerState<OnboardingPage> {
   final PageController _pageController = PageController();
-  int _currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
+    final currentIndex = ref.watch(currentIndexProvider);
+
     return SafeArea(
       child: Scaffold(
         body: Stack(
@@ -37,23 +41,21 @@ class _OnboardingPageState extends State<OnboardingPage> {
               controller: _pageController,
               physics: const NeverScrollableScrollPhysics(),
               onPageChanged: (index) {
-                setState(() {
-                  _currentIndex = index;
-                });
+                ref.read(currentIndexProvider.notifier).state = index;
               },
               children: [
                 buildOnboardingPage(
-                  image: 'assets/images/splash_background1.jpg',
+                  image: ImageConstants.onboarding_slide1,
                   title: LocaleKeys.onboarding_slide1title.locale,
                   description: LocaleKeys.onboarding_slide1desc,
                 ),
                 buildOnboardingPage(
-                  image: 'assets/images/splash_background2.jpg',
+                  image: ImageConstants.onboarding_slide2,
                   title: LocaleKeys.onboarding_slide2title.locale,
                   description: LocaleKeys.onboarding_slide2desc.locale,
                 ),
                 buildOnboardingPage(
-                  image: 'assets/images/splash_background3.jpg',
+                  image: ImageConstants.onboarding_slide3,
                   title: LocaleKeys.onboarding_slide3title.locale,
                   description: LocaleKeys.onboarding_slide3desc.locale,
                   isLastPage: true,
@@ -69,7 +71,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 children: [
                   Expanded(
                     child: LinearProgressIndicator(
-                      value: (_currentIndex + 1) / 3,
+                      value: (currentIndex + 1) / 3,
                       backgroundColor: AppColors.grey,
                       borderRadius: AppBorderRadius.all(12),
                       color: AppColors.primary,
@@ -85,39 +87,42 @@ class _OnboardingPageState extends State<OnboardingPage> {
               right: 0,
               child: Container(
                 alignment: Alignment.topCenter,
-                padding: const AppEdgeInset.all(value: AppSpacing.spacing12),
+                padding: AppEdgeInset.all(value: AppSpacing.spacing12),
                 child: LogoWidget(
                   fontsize: 60.sp,
+                  isWhite: false,
                 ),
               ),
             ),
-            if (_currentIndex > 0)
+            if (currentIndex > 0)
               Positioned(
-                top: 50,
-                left: 55,
-                child: GestureDetector(
-                  onTap: () {
-                    if (_currentIndex > 0) {
-                      _pageController.previousPage(
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.ease,
-                      );
-                    }
-                  },
-                  child: Container(
-                    padding:
-                        const AppEdgeInset.all(value: AppSpacing.spacing16),
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: AppColors.secondary,
+                  top: 48,
+                  left: 55,
+                  child: GestureDetector(
+                    onTap: () {
+                      if (currentIndex > 0) {
+                        _pageController.previousPage(
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.ease,
+                        );
+                      }
+                    },
+                    child: CustomCircleIconButton(
+                      padding: 15.w,
+                      backgroundColor: AppColors.primary,
+                      icon: Icons.arrow_back,
+                      iconColor: AppColors.white,
+                      iconSize: 20.w,
+                      onPressed: () {
+                        if (currentIndex > 0) {
+                          _pageController.previousPage(
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.ease,
+                          );
+                        }
+                      },
                     ),
-                    child: const Icon(
-                      Icons.arrow_back,
-                      color: AppColors.white,
-                    ),
-                  ),
-                ),
-              ),
+                  )),
           ],
         ),
       ),
@@ -131,7 +136,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
     bool isLastPage = false,
   }) {
     return Padding(
-      padding: const AppEdgeInset.all(value: AppSpacing.spacing20),
+      padding: AppEdgeInset.all(value: AppSpacing.spacing20),
       child: ClipPath(
         clipper: OnboardingClipPath(),
         child: Stack(
@@ -192,47 +197,34 @@ class _OnboardingPageState extends State<OnboardingPage> {
             if (!isLastPage)
               Positioned(
                 bottom: 30,
-                right: 40,
-                child: GestureDetector(
-                  onTap: () {
+                right: 35,
+                child: CustomCircleIconButton(
+                  padding: 15.w,
+                  backgroundColor: AppColors.transparent,
+                  icon: Icons.arrow_forward,
+                  iconColor: AppColors.white,
+                  iconSize: 20.w,
+                  onPressed: () {
                     _pageController.nextPage(
                       duration: const Duration(milliseconds: 300),
                       curve: Curves.ease,
                     );
                   },
-                  child: Container(
-                    padding:
-                        const AppEdgeInset.all(value: AppSpacing.spacing16),
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: AppColors.transparent,
-                    ),
-                    child: const Icon(
-                      Icons.arrow_forward,
-                      color: AppColors.white,
-                    ),
-                  ),
                 ),
               ),
             if (isLastPage)
               Positioned(
                 bottom: 30,
                 right: 40,
-                child: GestureDetector(
-                  onTap: () {
-                    context.router.push(const AuthenticationRoute());
+                child: CustomCircleIconButton(
+                  padding: 15.w,
+                  backgroundColor: AppColors.transparent,
+                  icon: Icons.check,
+                  iconColor: AppColors.white,
+                  iconSize: 20.w,
+                  onPressed: () {
+                    context.router.replace(const AuthenticationRoute());
                   },
-                  child: Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: AppColors.transparent,
-                    ),
-                    child: const Icon(
-                      Icons.check,
-                      color: AppColors.white,
-                    ),
-                  ),
                 ),
               ),
           ],

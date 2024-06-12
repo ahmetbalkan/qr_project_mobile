@@ -10,6 +10,8 @@ class ProductLocalization extends EasyLocalization {
   }) : super(
           supportedLocales: _supportedLocales,
           path: PathString.translationsPath,
+          fallbackLocale: Locales.en.locale, // Fallback locale belirleyin
+          useOnlyLangCode: true, // Sadece dil kodlarını kullanmak isterseniz
         );
 
   static final List<Locale> _supportedLocales = [

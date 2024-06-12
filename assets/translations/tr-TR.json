@@ -1,18 +1,76 @@
 {
-  "onboarding":
+  "splash": 
   {
-    "slide1title":"Hoş Geldiniz!",
-    "slide1desc":"QR ile iletişimi kolaylaştırmaya hazır mısınız? Birkaç basit adımla başlayalım!",
-    "slide2title":"QR Kodunuzu Oluşturun",
-    "slide2desc":"Kendi bilgilerinizi, restoran menünüzü veya evcil hayvanınızın bilgilerini paylaşmak için bir QR kod oluşturun.",
-    "slide3title":"Kodunuzu Paylaşın",
-    "slide3desc":"Oluşturduğunuz QR kodunu telefon numaranız, email, mesaj veya diğer bilgilerle kolayca paylaşın. Araç etiketleri, evcil hayvan tasmaları veya restoran menüleri için mükemmel!"
+    "splashdesc": "QR ile Anında Bağlanın."
   },
-  "authentication":
+  "onboarding": 
   {
-    "createaccount":"Hesabınızı Oluşturun",
-    "createaccountdesc":"Hesabınızı oluşturun ve QR kodlarınızı yönetmeye başlayın.",
-    "maillogin":"Kayıt için Mail Kullan.",
-    "ihaveaccount":"Hesabınız mı var? Giriş Yapın"
+    "onboarding": "Karşılama",
+    "slide1title": "Hoş Geldiniz!",
+    "slide1desc": "QR ile iletişimi kolaylaştırmaya hazır mısınız? Birkaç basit adımla başlayalım!",
+    "slide2title": "QR Kodunuzu Oluşturun",
+    "slide2desc": "Kendi bilgilerinizi, restoran menünüzü veya evcil hayvanınızın bilgilerini paylaşmak için bir QR kod oluşturun.",
+    "slide3title": "Kodunuzu Paylaşın",
+    "slide3desc": "Oluşturduğunuz QR kodunu telefon numaranız, email, mesaj veya diğer bilgilerle kolayca paylaşın. Araç etiketleri, evcil hayvan tasmaları veya restoran menüleri için mükemmel!"
+  },
+  "authentication": 
+  {
+    "createaccount": "Hesabınızı Oluşturun",
+    "createaccountdesc": "Hesabınızı oluşturun ve QR kodlarınızı yönetmeye başlayın.",
+    "maillogin": "Kayıt için Mail Kullan",
+    "ihaveaccount": "Hesabınız mı var? Giriş Yapın",
+    "email": "Email",
+    "pleaseenteremail": "Lütfen e-posta adresinizi girin",
+    "password": "Şifre",
+    "pleaseenterpassword": "Lütfen şifrenizi girin",
+    "repeatpassword": "Şifreyi Tekrarla",
+    "pleaseenterrepeatpassword": "Lütfen şifrenizi tekrar girin"
+    
+  },
+  "login": 
+  {
+    "title": "Merhaba, hoş geldiniz!",
+    "desc":"Hesabınıza giriş yapmak için lütfen e-posta adresinizi ve şifrenizi girin.",
+    
+    "login": "Giriş Yap"
+
+  },
+  "register": 
+  {
+    "registertitle": "Hesabınızı Oluşturun",
+    "registerdesc": "Hesap oluşturmak için lütfen bilgilerinizi girin.",
+    "register": "Kayıt Ol"
+    
+
+  },
+  "fotgotpassword": 
+  {
+    "forgotpasswordtitle": "Şifremi Unuttum?",
+    "forgotpassworddesc": "Şifre sıfırlama talimatlarınızı almak için aşağıya e-posta adresinizi girin.",
+    "sendotp": "OTP Gönder"
+  },
+  "pincode": 
+  {
+    "pincodetitle": "OTP Doğrulama",
+    "pincodedesc": "E-posta adresinizi doğrulamanız için size bir kod gönderdik. Doğrulama işlemine devam etmek için lütfen kodu aşağıdaki alana girin.",
+   "pincodedesc2":"Lütfen bu kodun bu mesajdan 10 dakika sonra sona ereceğini unutmayın. Bir mesaj almazsanız veya herhangi bir sorun yaşarsanız, lütfen destek ekibimizle iletişime geçin.",
+    "otpcode": "OTP Kodu",
+    "checkotp":"Kontrol Et"
+  },
+  "changepassword": 
+  {
+    
+    "changepasswordtitle": "Şifre Değiştir",
+    "changepassworddesc": "Lütfen yeni şifrenizi girin ve onaylamak için tekrarlayın.",
+    "maillogin": "Kayıt için Mail Kullan",
+    "ihaveaccount": "Hesabınız mı var? Giriş Yapın",
+    "changepasswordbutton": "Değiştir"
+  },
+  "other": 
+  {
+    
+  
   }
+
+
 }

@@ -22,7 +22,7 @@ class AppTextStyles {
   static TextStyle get displaySmall => TextStyle(
         fontFamily: fontFamily,
         fontWeight: FontWeight.normal,
-        fontSize: 28.sp,
+        fontSize: 24.sp,
         height: 1.20,
       );
 

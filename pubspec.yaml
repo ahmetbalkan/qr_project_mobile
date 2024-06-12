@@ -30,6 +30,7 @@ dependencies:
   flutter_riverpod: ^2.5.1
   flutter_screenutil: ^5.9.3
   auto_size_text: ^3.0.0
+  reactive_pinput: ^3.0.1
 
 
 
@@ -47,6 +48,9 @@ flutter:
   assets:
     - assets/
     - assets/images/
+    - assets/images/authentication/
+    - assets/images/splash/
+    - assets/images/onboarding/
     - assets/translations/
     - assets/fonts/
     

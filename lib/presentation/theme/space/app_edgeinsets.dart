@@ -2,20 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:qontact/presentation/theme/app_spacing.dart';
 
 class AppEdgeInset extends EdgeInsets {
-  const AppEdgeInset.horizontal({double value = AppSpacing.spacing16})
-      : super.symmetric(horizontal: value);
-  const AppEdgeInset.vertical({double value = AppSpacing.spacing16})
-      : super.symmetric(vertical: value);
-  const AppEdgeInset.symmetric(
-      {super.horizontal = AppSpacing.spacing16,
-      super.vertical = AppSpacing.spacing16})
-      : super.symmetric();
-  const AppEdgeInset.all({double value = AppSpacing.spacing16})
-      : super.all(value);
-  const AppEdgeInset.only({
-    super.left,
-    super.top,
-    super.right,
-    super.bottom,
-  }) : super.only();
+  AppEdgeInset.horizontal({double? value})
+      : super.symmetric(horizontal: value ?? AppSpacing.spacing16);
+  AppEdgeInset.vertical({double? value})
+      : super.symmetric(vertical: value ?? AppSpacing.spacing16);
+  AppEdgeInset.symmetric({
+    double? horizontal,
+    double? vertical,
+  }) : super.symmetric(
+          horizontal: horizontal ?? AppSpacing.spacing16,
+          vertical: vertical ?? AppSpacing.spacing16,
+        );
+  AppEdgeInset.all({double? value}) : super.all(value ?? AppSpacing.spacing16);
+  AppEdgeInset.only({
+    double? left,
+    double? top,
+    double? right,
+    double? bottom,
+  }) : super.only(
+          left: left ?? AppSpacing.spacing16,
+          top: top ?? AppSpacing.spacing16,
+          right: right ?? AppSpacing.spacing16,
+          bottom: bottom ?? AppSpacing.spacing16,
+        );
 }
