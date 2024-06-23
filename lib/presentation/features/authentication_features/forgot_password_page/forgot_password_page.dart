@@ -6,6 +6,7 @@ import 'package:qontact/core/utils/locale/locale_extention.dart';
 import 'package:qontact/presentation/global_widgets/buttons/custom_button.dart';
 import 'package:qontact/presentation/global_widgets/buttons/custom_circle_icon_button.dart';
 import 'package:qontact/presentation/global_widgets/locale_text/locale_text.dart';
+import 'package:qontact/presentation/global_widgets/snackbar/top_snackbar.dart';
 import 'package:qontact/presentation/navigation/app_router.gr.dart';
 import 'package:qontact/presentation/theme/app_color.dart';
 import 'package:qontact/presentation/theme/app_spacing.dart';
@@ -13,7 +14,6 @@ import 'package:qontact/presentation/theme/space/app_edgeinsets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qontact/presentation/theme/space/space_widget.dart';
 import 'package:qontact/presentation/theme/text_styles.dart';
-import 'package:reactive_forms/reactive_forms.dart';
 
 final currentIndexProvider = StateProvider<int>((ref) => 0);
 
@@ -26,22 +26,39 @@ class ForgotPasswordPage extends ConsumerStatefulWidget {
 }
 
 class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
-  late FormGroup registerform;
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _emailController = TextEditingController();
 
   @override
-  void initState() {
-    registerform = FormGroup({
-      'email': FormControl<String>(),
-    });
-    super.initState();
+  void dispose() {
+    _emailController.dispose();
+    super.dispose();
+  }
+
+  void _sendOtp(BuildContext context) {
+    final email = _emailController.text;
+
+    if (email.isEmpty) {
+      showTopSnackBar(context, 'Please enter your email address');
+      return;
+    }
+
+    final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
+    if (!emailRegex.hasMatch(email)) {
+      showTopSnackBar(context, 'Please enter a valid email address');
+      return;
+    }
+
+    // Form is valid, proceed with sending OTP
+    context.router.push(const OtpVerificationRoute());
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      body: ReactiveForm(
-        formGroup: registerform,
+      body: Form(
+        key: _formKey,
         child: SafeArea(
           child: SingleChildScrollView(
             child: Column(
@@ -77,17 +94,21 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
                       Space(
                         height: AppSpacing.spacing20,
                       ),
-                      //TODO Keyboard Type Ayarla
                       LocaleText(
                           text: LocaleKeys.authentication_email,
                           style: AppTextStyles.bodyLarge
                               .copyWith(fontWeight: FontWeight.w600)),
                       Space(height: AppSpacing.spacing4),
-                      Container(
+                      SizedBox(
                         height: 60.w,
-                        child: ReactiveTextField<String>(
-                          formControlName: 'email',
+                        child: TextFormField(
+                          controller: _emailController,
                           decoration: InputDecoration(
+                            enabledBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: AppColors.grey,
+                              ),
+                            ),
                             fillColor: AppColors.grey,
                             hintText: LocaleKeys
                                 .authentication_pleaseenteremail.locale,
@@ -101,15 +122,7 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
                         alignment: Alignment.centerRight,
                         child: CustomButton(
                           onTap: () {
-                            context.router.push(const OtpVerificationRoute());
-
-                            /*   if (registerform.valid) {
-                              // Form is valid, proceed with registration
-                              print(registerform.value);
-                            } else {
-                              // Form is invalid, display validation errors
-                              registerform.markAllAsTouched();
-                            }*/
+                            _sendOtp(context);
                           },
                           isText: true,
                           height: 50.w,

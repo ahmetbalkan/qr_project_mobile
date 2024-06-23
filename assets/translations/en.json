@@ -60,7 +60,33 @@
     "ihaveaccount": "Have an account? Log In",
     "changepasswordbutton": "Change"
   },
-  "other": 
-  {
+  "personalinformation": {
+    "welcometitle": "Hoş Geldiniz",
+    "welcomedescription": "Bu bilgileri ilk QR oluşturmak için kullanacağız.",
+    "infousagetitle": "İlk QR, kişisel bilgilerinizi paylaşmanız içindir.",
+    "securitypurpose": "Sonrasında premium satın alarak restoran, evcil hayvan, reklam vb. işlemler için de QR oluşturabilirsiniz.",
+    "kvkkinfolink": "KVKK bilgilendirme metni için tıklayın.",
+    "kvkkapproval": "KVKK onayını kabul ediyorum.",
+    "profilephototitle": "Profile Photo",
+    "profilephotodescription": "Please add your profile photo to create an account.",
+    "selectimage": "Select Image",
+    "firstnametitle": "First Name",
+    "firstnamedescription": "Please enter your first name to create an account.",
+    "lastnametitle": "Last Name",
+    "lastnamedescription": "Please enter your last name to create an account.",
+    "emailtitle": "Email",
+    "emaildescription": "Please enter your email address to create an account.",
+    "phonetitle": "Phone Number",
+    "phonedescription": "Please enter your phone number to create an account.",
+    "socialmediatitle": "Social Media",
+    "socialmediadescription": "Please select your social media accounts.",
+    "socialmediaaddress": " Adresi",
+    "qrnotetitle": "QR Notunuz",
+    "qrnotedescription": "Lütfen QR kodunuza eklemek istediğiniz notu yazın.",
+    "reviewinformationtitle": "Review Information",
+    "reviewinformationdescription": "Please review your information.",
+    "nextbutton": "Sonraki",
+    "previousbutton": "Önceki",
+    "finishbutton": "Finish"
   }
 }

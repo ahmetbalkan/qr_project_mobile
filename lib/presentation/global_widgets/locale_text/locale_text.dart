@@ -6,13 +6,15 @@ import 'package:qontact/presentation/theme/text_styles.dart'; // AppTextStyles b
 class LocaleText extends StatelessWidget {
   final String text;
   final TextStyle? style; // Stil parametresi
+  final TextAlign? textAlign;
 
-  const LocaleText({super.key, required this.text, this.style});
+  const LocaleText({super.key, required this.text, this.style, this.textAlign});
 
   @override
   Widget build(BuildContext context) {
     return AutoSizeText(
       text.tr(),
+      textAlign: textAlign ?? TextAlign.start,
       style: style ??
           AppTextStyles.bodyLarge.copyWith(
             color: Colors.white,

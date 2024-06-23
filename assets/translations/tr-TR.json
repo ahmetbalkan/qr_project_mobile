@@ -35,14 +35,23 @@
     "login": "Giriş Yap"
 
   },
-  "register": 
-  {
-    "registertitle": "Hesabınızı Oluşturun",
-    "registerdesc": "Hesap oluşturmak için lütfen bilgilerinizi girin.",
-    "register": "Kayıt Ol"
-    
-
-  },
+    "register": {
+      "registertitle": "Hesabınızı Oluşturun",
+      "registerdesc": "Hesap oluşturmak için lütfen bilgilerinizi girin.",
+      "register": "Kayıt Ol",
+      "email": "Email",
+      "emailhint": "Lütfen Email Adresinizi Girin",
+      "password": "Şifre",
+      "passwordhint": "Lütfen Şifrenizi Girin",
+      "repeatpassword": "Şifreyi Tekrar Girin",
+      "repeatpasswordhint": "Şifreyi Yeniden Girin",
+      "emailrequired": "Lütfen email adresinizi girin",
+      "invalidemail": "Lütfen geçerli bir email adresi girin",
+      "passwordrequired": "Lütfen şifrenizi girin",
+      "passwordlength": "Şifre en az 8 karakter uzunluğunda olmalıdır",
+      "repeatpasswordrequired": "Lütfen şifrenizi tekrar girin",
+      "passwordmismatch": "Şifreler uyuşmuyor"
+    },   
   "fotgotpassword": 
   {
     "forgotpasswordtitle": "Şifremi Unuttum?",
@@ -65,6 +74,53 @@
     "maillogin": "Kayıt için Mail Kullan",
     "ihaveaccount": "Hesabınız mı var? Giriş Yapın",
     "changepasswordbutton": "Değiştir"
+  },
+  "personalinformation": {
+"welcometitle": "Hoş Geldiniz",
+    "welcomedescription": "Bu bilgileri ilk QR oluşturmak için kullanacağız.",
+    "infousagetitle": "İlk QR, kişisel bilgilerinizi paylaşmanız içindir.",
+    "securitypurpose": "Sonrasında premium satın alarak restoran, evcil hayvan, reklam vb. işlemler için de QR oluşturabilirsiniz.",
+    "kvkkinfolink": "KVKK bilgilendirme metni için tıklayın.",
+    "kvkkapproval": "KVKK onayını kabul ediyorum.",
+    "profilephototitle": "Profil Fotoğrafı",
+    "profilephotodescription": "Hesap oluşturmak için lütfen profil fotoğrafınızı ekleyin.",
+    "selectimage": "Fotoğraf Seç",
+    "firstnametitle": "Ad",
+    "firstnamedescription": "Hesap oluşturmak için lütfen adınızı girin.",
+    "lastnametitle": "Soyad",
+    "lastnamedescription": "Hesap oluşturmak için lütfen soyadınızı girin.",
+    "emailtitle": "Email",
+    "emaildescription": "Hesap oluşturmak için lütfen email adresinizi girin.",
+    "phonetitle": "Telefon Numarası",
+    "phonedescription": "Hesap oluşturmak için lütfen telefon numaranızı girin.",
+    "socialmediatitle": "Sosyal Medya",
+    "socialmediadescription": "Lütfen sosyal medya hesaplarınızı seçin.",
+    "socialmediaaddress": " Adresi",
+    "qrnotetitle": "QR Notunuz",
+    "qrnotedescription": "Lütfen QR kodunuza eklemek istediğiniz notu yazın.",
+    "reviewinformationtitle": "Bilgileri Gözden Geçir",
+    "reviewinformationdescription": "Lütfen bilgilerinizi gözden geçirin.",
+    "nextbutton": "Sonraki",
+    "previousbutton": "Önceki",
+    "finishbutton": "Bitir",
+    "phonevisibility": "Telefon görünsün mü?",
+    "onlynotification": "Sadece bildirim gönder",
+    "socialmediavisibility": "Sosyal medya görünsün mü?",
+    "namevisibility": "İsim soyisim görünsün mü?",
+    "profilephotoview": "Profil fotoğrafı görünsün mü?",
+    "noaccess": "Lütfen dosya erişim izni verin.",
+    "addprofilephoto": "Lütfen bir profil fotoğrafı ekleyin.",
+    "entername": "Lütfen adınızı girin.",
+    "entersurname": "Lütfen soyadınızı girin.",
+    "validemail": "Lütfen geçerli bir email adresi girin.",
+    "validphone": "Lütfen geçerli bir telefon numarası girin.",
+    "notificationpermission": "Bildirim izniniz yok. Aktif edemezsiniz. Lütfen izinleri verin.",
+    "privacytitle": "Gizlilik Ayarları",
+    "privacydescription": "Lütfen gizlilik ayarlarınızı yapılandırın.",
+    "nosocialmedia": "Sosyal medya hesaplarını paylaşmamayı seçtiniz.",
+    "sharenosocialmedia": "Sosyal medya paylaşmak istemiyorum",
+    "socialmedia_empty": "Lütfen tüm sosyal medya alanlarını doldurun veya paylaşmamayı seçin."
+
   },
   "other": 
   {

@@ -6,15 +6,13 @@ import 'package:qontact/core/utils/locale/locale_extention.dart';
 import 'package:qontact/presentation/global_widgets/buttons/custom_button.dart';
 import 'package:qontact/presentation/global_widgets/buttons/custom_circle_icon_button.dart';
 import 'package:qontact/presentation/global_widgets/locale_text/locale_text.dart';
+import 'package:qontact/presentation/global_widgets/snackbar/top_snackbar.dart';
 import 'package:qontact/presentation/theme/app_color.dart';
 import 'package:qontact/presentation/theme/app_spacing.dart';
 import 'package:qontact/presentation/theme/space/app_edgeinsets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qontact/presentation/theme/space/space_widget.dart';
 import 'package:qontact/presentation/theme/text_styles.dart';
-import 'package:reactive_forms/reactive_forms.dart';
-
-final currentIndexProvider = StateProvider<int>((ref) => 0);
 
 @RoutePage()
 class ChangePasswordPage extends ConsumerStatefulWidget {
@@ -25,33 +23,54 @@ class ChangePasswordPage extends ConsumerStatefulWidget {
 }
 
 class _ChangePasswordPageState extends ConsumerState<ChangePasswordPage> {
-  late FormGroup changepasswordform;
+  final _formKey = GlobalKey<FormState>();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _repasswordController = TextEditingController();
 
   @override
-  void initState() {
-    changepasswordform = FormGroup({
-      'password': FormControl<String>(
-        validators: [
-          Validators.required,
-          Validators.minLength(8),
-        ],
-      ),
-      'repassword': FormControl<String>(
-        validators: [Validators.required],
-      ),
-    }, validators: [
-      Validators.mustMatch('password', 'repassword'),
-    ]);
-    super.initState();
+  void dispose() {
+    _passwordController.dispose();
+    _repasswordController.dispose();
+    super.dispose();
+  }
+
+  void _changePassword(BuildContext context) {
+    final password = _passwordController.text;
+    final repassword = _repasswordController.text;
+
+    if (password.isEmpty) {
+      showTopSnackBar(context, 'Please enter your password');
+      return;
+    }
+
+    if (password.length < 8) {
+      showTopSnackBar(context, 'Password must be at least 8 characters long');
+      return;
+    }
+
+    if (repassword.isEmpty) {
+      showTopSnackBar(context, 'Please re-enter your password');
+      return;
+    }
+
+    if (password != repassword) {
+      showTopSnackBar(context, 'Passwords do not match');
+      return;
+    }
+
+    // Form is valid, proceed with changing password
+    print({
+      'password': password,
+      'repassword': repassword,
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      body: ReactiveForm(
-        formGroup: changepasswordform,
+      body: Form(
+        key: _formKey,
         child: SafeArea(
           child: SingleChildScrollView(
             child: Column(
@@ -92,12 +111,21 @@ class _ChangePasswordPageState extends ConsumerState<ChangePasswordPage> {
                           style: AppTextStyles.bodyLarge
                               .copyWith(fontWeight: FontWeight.w600)),
                       Space(height: AppSpacing.spacing4),
-                      ReactiveTextField<String>(
-                        formControlName: 'password',
-                        decoration: InputDecoration(
-                          hintText: LocaleKeys.authentication_password.locale,
-                          border: const OutlineInputBorder(),
-                          hintStyle: AppTextStyles.bodyMedium,
+                      SizedBox(
+                        height: 60.w,
+                        child: TextFormField(
+                          controller: _passwordController,
+                          obscureText: true,
+                          decoration: InputDecoration(
+                            enabledBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: AppColors.grey,
+                              ),
+                            ),
+                            hintText: LocaleKeys.authentication_password.locale,
+                            border: const OutlineInputBorder(),
+                            hintStyle: AppTextStyles.bodyMedium,
+                          ),
                         ),
                       ),
                       const Space(),
@@ -106,14 +134,23 @@ class _ChangePasswordPageState extends ConsumerState<ChangePasswordPage> {
                           style: AppTextStyles.bodyLarge
                               .copyWith(fontWeight: FontWeight.w600)),
                       Space(height: AppSpacing.spacing4),
-                      ReactiveTextField<String>(
-                        formControlName: 'repassword',
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          hintText: LocaleKeys
-                              .authentication_pleaseenterrepeatpassword.locale,
-                          border: const OutlineInputBorder(),
-                          hintStyle: AppTextStyles.bodyMedium,
+                      SizedBox(
+                        height: 60.w,
+                        child: TextFormField(
+                          controller: _repasswordController,
+                          obscureText: true,
+                          decoration: InputDecoration(
+                            enabledBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: AppColors.grey,
+                              ),
+                            ),
+                            hintText: LocaleKeys
+                                .authentication_pleaseenterrepeatpassword
+                                .locale,
+                            border: const OutlineInputBorder(),
+                            hintStyle: AppTextStyles.bodyMedium,
+                          ),
                         ),
                       ),
                       Space(height: AppSpacing.spacing24),
@@ -121,11 +158,7 @@ class _ChangePasswordPageState extends ConsumerState<ChangePasswordPage> {
                         alignment: Alignment.centerRight,
                         child: CustomButton(
                           onTap: () {
-                            if (changepasswordform.valid) {
-                              print(changepasswordform.value);
-                            } else {
-                              changepasswordform.markAllAsTouched();
-                            }
+                            _changePassword(context);
                           },
                           isText: true,
                           height: 50.w,

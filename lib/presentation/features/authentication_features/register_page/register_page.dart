@@ -4,15 +4,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qontact/presentation/global_widgets/buttons/custom_button.dart';
 import 'package:qontact/presentation/global_widgets/buttons/custom_circle_icon_button.dart';
 import 'package:qontact/presentation/global_widgets/locale_text/locale_text.dart';
+import 'package:qontact/presentation/global_widgets/snackbar/top_snackbar.dart';
 import 'package:qontact/presentation/theme/app_color.dart';
 import 'package:qontact/presentation/theme/app_spacing.dart';
 import 'package:qontact/presentation/theme/space/app_edgeinsets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qontact/presentation/theme/space/space_widget.dart';
 import 'package:qontact/presentation/theme/text_styles.dart';
-import 'package:reactive_forms/reactive_forms.dart';
-
-final currentIndexProvider = StateProvider<int>((ref) => 0);
 
 @RoutePage()
 class RegisterPage extends ConsumerStatefulWidget {
@@ -23,38 +21,69 @@ class RegisterPage extends ConsumerStatefulWidget {
 }
 
 class _RegisterPageState extends ConsumerState<RegisterPage> {
-  late FormGroup registerform;
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _repasswordController = TextEditingController();
 
   @override
-  void initState() {
-    registerform = FormGroup({
-      'email': FormControl<String>(
-        validators: [
-          Validators.required,
-          Validators.email,
-        ],
-      ),
-      'password': FormControl<String>(
-        validators: [
-          Validators.required,
-          Validators.minLength(8),
-        ],
-      ),
-      'repassword': FormControl<String>(
-        validators: [Validators.required],
-      ),
-    }, validators: [
-      Validators.mustMatch('password', 'repassword'),
-    ]);
-    super.initState();
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    _repasswordController.dispose();
+    super.dispose();
+  }
+
+  void _register(BuildContext context) {
+    final email = _emailController.text;
+    final password = _passwordController.text;
+    final repassword = _repasswordController.text;
+
+    if (email.isEmpty) {
+      showTopSnackBar(context, 'Please enter your email address');
+      return;
+    }
+
+    final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
+    if (!emailRegex.hasMatch(email)) {
+      showTopSnackBar(context, 'Please enter a valid email address');
+      return;
+    }
+
+    if (password.isEmpty) {
+      showTopSnackBar(context, 'Please enter your password');
+      return;
+    }
+
+    if (password.length < 8) {
+      showTopSnackBar(context, 'Password must be at least 8 characters long');
+      return;
+    }
+
+    if (repassword.isEmpty) {
+      showTopSnackBar(context, 'Please re-enter your password');
+      return;
+    }
+
+    if (password != repassword) {
+      showTopSnackBar(context, 'Passwords do not match');
+      return;
+    }
+
+    // Form is valid, proceed with registration
+    print({
+      'email': email,
+      'password': password,
+      'repassword': repassword,
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      body: ReactiveForm(
-        formGroup: registerform,
+      body: Form(
+        key: _formKey,
         child: SafeArea(
           child: SingleChildScrollView(
             child: Column(
@@ -96,12 +125,20 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                           style: AppTextStyles.bodyLarge
                               .copyWith(fontWeight: FontWeight.w600)),
                       Space(height: AppSpacing.spacing4),
-                      ReactiveTextField<String>(
-                        formControlName: 'email',
-                        decoration: InputDecoration(
-                          hintText: 'Please Enter your Email Address',
-                          border: const OutlineInputBorder(),
-                          hintStyle: AppTextStyles.bodyMedium,
+                      SizedBox(
+                        height: 60.w,
+                        child: TextFormField(
+                          controller: _emailController,
+                          decoration: InputDecoration(
+                            enabledBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: AppColors.grey,
+                              ),
+                            ),
+                            hintText: 'Please Enter your Email Address',
+                            border: const OutlineInputBorder(),
+                            hintStyle: AppTextStyles.bodyMedium,
+                          ),
                         ),
                       ),
                       const Space(),
@@ -110,16 +147,21 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                           style: AppTextStyles.bodyLarge
                               .copyWith(fontWeight: FontWeight.w600)),
                       Space(height: AppSpacing.spacing4),
-                      ReactiveTextField<String>(
-                        formControlName: 'password',
-                        validationMessages: {
-                          ValidationMessage.required: (error) => "asfsdfsdf",
-                        },
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          hintText: 'Please Enter your Password',
-                          hintStyle: AppTextStyles.bodyMedium,
-                          border: const OutlineInputBorder(),
+                      SizedBox(
+                        height: 60.w,
+                        child: TextFormField(
+                          controller: _passwordController,
+                          obscureText: true,
+                          decoration: InputDecoration(
+                            enabledBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: AppColors.grey,
+                              ),
+                            ),
+                            hintText: 'Please Enter your Password',
+                            hintStyle: AppTextStyles.bodyMedium,
+                            border: const OutlineInputBorder(),
+                          ),
                         ),
                       ),
                       const Space(),
@@ -128,13 +170,21 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                           style: AppTextStyles.bodyLarge
                               .copyWith(fontWeight: FontWeight.w600)),
                       Space(height: AppSpacing.spacing4),
-                      ReactiveTextField<String>(
-                        formControlName: 'repassword',
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          hintText: 'Re-enter Password',
-                          border: const OutlineInputBorder(),
-                          hintStyle: AppTextStyles.bodyMedium,
+                      SizedBox(
+                        height: 60.w,
+                        child: TextFormField(
+                          controller: _repasswordController,
+                          obscureText: true,
+                          decoration: InputDecoration(
+                            enabledBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: AppColors.grey,
+                              ),
+                            ),
+                            hintText: 'Re-enter Password',
+                            border: const OutlineInputBorder(),
+                            hintStyle: AppTextStyles.bodyMedium,
+                          ),
                         ),
                       ),
                       Space(height: AppSpacing.spacing24),
@@ -142,13 +192,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                         alignment: Alignment.centerRight,
                         child: CustomButton(
                           onTap: () {
-                            if (registerform.valid) {
-                              // Form is valid, proceed with registration
-                              print(registerform.value);
-                            } else {
-                              // Form is invalid, display validation errors
-                              registerform.markAllAsTouched();
-                            }
+                            _register(context);
                           },
                           isText: true,
                           height: 50.w,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qontact/core/utils/extentions/ColorToMaterial.dart';
 import 'package:qontact/presentation/theme/app_color.dart';
 import 'package:qontact/presentation/theme/text_styles.dart';
 import 'package:qontact/presentation/theme/text_themes.dart';
@@ -25,6 +26,17 @@ class AppTheme {
         titleTextStyle: AppTextStyles.titleSmall,
         iconTheme: const IconThemeData(color: AppColors.white),
       ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ButtonStyle(
+          foregroundColor: MaterialStateProperty.all(AppColors.white),
+          backgroundColor: MaterialStateProperty.all(AppColors.mainPrimary),
+          shape: MaterialStateProperty.all(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
+        ),
+      ),
     );
   }
 
@@ -50,6 +62,20 @@ class AppTheme {
         color: AppColors.mainPrimary,
         titleTextStyle: AppTextStyles.titleSmall,
         iconTheme: const IconThemeData(color: AppColors.black),
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ButtonStyle(
+          textStyle: MaterialStateProperty.all(
+            AppTextStyles.bodyMedium,
+          ),
+          foregroundColor: MaterialStateProperty.all(AppColors.white),
+          backgroundColor: MaterialStateProperty.all(AppColors.primary),
+          shape: MaterialStateProperty.all(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
+        ),
       ),
     );
   }

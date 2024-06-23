@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qontact/core/constants/locale/locale_keys.g.dart';
 import 'package:qontact/core/utils/locale/locale_extention.dart';
 import 'package:qontact/presentation/global_widgets/locale_text/locale_text.dart';
@@ -21,7 +22,7 @@ class _SplashPageState extends State<SplashPage> {
   void initState() {
     Future.delayed(const Duration(seconds: 0), () {
       context.router
-          .pushAndPopUntil(const OnboardingRoute(), predicate: (_) => false);
+          .pushAndPopUntil(const PremiumRoute(), predicate: (_) => false);
     });
     super.initState();
   }
@@ -35,7 +36,7 @@ class _SplashPageState extends State<SplashPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             LogoWidget(
-              fontsize: 120,
+              fontsize: 120.sp,
               isWhite: false,
             ),
             LocaleText(

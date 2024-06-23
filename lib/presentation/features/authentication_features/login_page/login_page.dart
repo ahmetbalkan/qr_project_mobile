@@ -1,12 +1,12 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qontact/core/constants/locale/locale_keys.g.dart';
 import 'package:qontact/core/utils/locale/locale_extention.dart';
 import 'package:qontact/presentation/global_widgets/buttons/custom_button.dart';
 import 'package:qontact/presentation/global_widgets/buttons/custom_circle_icon_button.dart';
 import 'package:qontact/presentation/global_widgets/locale_text/locale_text.dart';
+import 'package:qontact/presentation/global_widgets/snackbar/top_snackbar.dart';
 import 'package:qontact/presentation/navigation/app_router.gr.dart';
 import 'package:qontact/presentation/theme/app_color.dart';
 import 'package:qontact/presentation/theme/app_spacing.dart';
@@ -14,9 +14,6 @@ import 'package:qontact/presentation/theme/space/app_edgeinsets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qontact/presentation/theme/space/space_widget.dart';
 import 'package:qontact/presentation/theme/text_styles.dart';
-import 'package:reactive_forms/reactive_forms.dart';
-
-final currentIndexProvider = StateProvider<int>((ref) => 0);
 
 @RoutePage()
 class LoginPage extends ConsumerStatefulWidget {
@@ -27,33 +24,51 @@ class LoginPage extends ConsumerStatefulWidget {
 }
 
 class _LoginPageState extends ConsumerState<LoginPage> {
-  late FormGroup loginform;
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
-  void initState() {
-    loginform = FormGroup({
-      'email': FormControl<String>(
-        validators: [
-          Validators.required,
-          Validators.email,
-        ],
-      ),
-      'password': FormControl<String>(
-        validators: [
-          Validators.required,
-          Validators.minLength(8),
-        ],
-      ),
-    });
-    super.initState();
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  void _login(BuildContext context) {
+    final email = _emailController.text;
+    final password = _passwordController.text;
+
+    if (email.isEmpty) {
+      showTopSnackBar(context, 'Please enter your email address');
+      return;
+    }
+
+    final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
+    if (!emailRegex.hasMatch(email)) {
+      showTopSnackBar(context, 'Please enter a valid email address');
+      return;
+    }
+
+    if (password.isEmpty) {
+      showTopSnackBar(context, 'Please enter your password');
+      return;
+    }
+
+    if (password.length < 8) {
+      showTopSnackBar(context, 'Password must be at least 8 characters long');
+      return;
+    }
+
+    context.navigateTo(const UserInformationRoute());
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      body: ReactiveForm(
-        formGroup: loginform,
+      body: Form(
+        key: _formKey,
         child: SafeArea(
           child: SingleChildScrollView(
             child: Column(
@@ -108,16 +123,22 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                           text: LocaleKeys.authentication_email,
                           style: AppTextStyles.bodyLarge
                               .copyWith(fontWeight: FontWeight.w600)),
-                      Space(
-                        height: AppSpacing.spacing4,
-                      ),
-                      ReactiveTextField<String>(
-                        formControlName: 'email',
-                        decoration: InputDecoration(
-                          hintText:
-                              LocaleKeys.authentication_pleaseenteremail.locale,
-                          border: const OutlineInputBorder(),
-                          hintStyle: AppTextStyles.bodyMedium,
+                      Space(height: AppSpacing.spacing4),
+                      SizedBox(
+                        height: 60.w,
+                        child: TextFormField(
+                          controller: _emailController,
+                          decoration: InputDecoration(
+                            enabledBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: AppColors.grey,
+                              ),
+                            ),
+                            hintText: LocaleKeys
+                                .authentication_pleaseenteremail.locale,
+                            border: const OutlineInputBorder(),
+                            hintStyle: AppTextStyles.bodyMedium,
+                          ),
                         ),
                       ),
                       const Space(),
@@ -125,20 +146,23 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                           text: LocaleKeys.authentication_password,
                           style: AppTextStyles.bodyLarge
                               .copyWith(fontWeight: FontWeight.w600)),
-                      Space(
-                        height: AppSpacing.spacing4,
-                      ),
-                      ReactiveTextField<String>(
-                        formControlName: 'password',
-                        validationMessages: {
-                          ValidationMessage.required: (error) => "asfsdfsdf",
-                        },
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          hintText: LocaleKeys
-                              .authentication_pleaseenterpassword.locale,
-                          hintStyle: AppTextStyles.bodyMedium,
-                          border: const OutlineInputBorder(),
+                      Space(height: AppSpacing.spacing4),
+                      SizedBox(
+                        height: 60.w,
+                        child: TextFormField(
+                          controller: _passwordController,
+                          obscureText: true,
+                          decoration: InputDecoration(
+                            enabledBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: AppColors.grey,
+                              ),
+                            ),
+                            hintText: LocaleKeys
+                                .authentication_pleaseenterpassword.locale,
+                            hintStyle: AppTextStyles.bodyMedium,
+                            border: const OutlineInputBorder(),
+                          ),
                         ),
                       ),
                       Space(height: AppSpacing.spacing24),
@@ -146,12 +170,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                         alignment: Alignment.centerRight,
                         child: CustomButton(
                           onTap: () {
-                            if (loginform.valid) {
-                              // Form is valid, proceed with registration
-                              print(loginform.value);
-                            } else {
-                              loginform.markAllAsTouched();
-                            }
+                            _login(context);
                           },
                           isText: true,
                           height: 50.w,

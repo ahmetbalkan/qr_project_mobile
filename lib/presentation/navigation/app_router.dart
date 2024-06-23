@@ -45,6 +45,36 @@ class RootRouter extends $RootRouter {
             path: 'changepassword',
             page: ChangePasswordRoute.page,
           ),
+          AutoRoute(
+            path: 'userinformation',
+            page: UserInformationRoute.page,
+          ),
+          AutoRoute(
+            path: 'premiumpage',
+            page: PremiumRoute.page,
+          ),
+        ]),
+    AutoRoute(
+        path: '/emptyhomepage',
+        page: EmptyHomeRoute.page,
+        maintainState: true,
+        children: [
+          RedirectRoute(path: '', redirectTo: 'homepage'),
+          AutoRoute(
+            path: 'homepage',
+            page: HomeRoute.page,
+          ),
+        ]),
+    AutoRoute(
+        path: '/emptypremiumpage',
+        page: EmptyPremiumRoute.page,
+        maintainState: true,
+        children: [
+          RedirectRoute(path: '', redirectTo: 'premiumpage'),
+          AutoRoute(
+            path: 'premiumpage',
+            page: PremiumRoute.page,
+          ),
         ]),
   ];
 }
@@ -52,4 +82,14 @@ class RootRouter extends $RootRouter {
 @RoutePage()
 class EmptyAuthenticationPage extends AutoRouter {
   const EmptyAuthenticationPage({super.key});
+}
+
+@RoutePage()
+class EmptyHomePage extends AutoRouter {
+  const EmptyHomePage({super.key});
+}
+
+@RoutePage()
+class EmptyPremiumPage extends AutoRouter {
+  const EmptyPremiumPage({super.key});
 }
